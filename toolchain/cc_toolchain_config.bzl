@@ -1,23 +1,25 @@
-load("@bazel_tools//tools/cpp:cc_toolchain_config_lib.bzl", "tool_path")
+load(
+    "@bazel_tools//tools/cpp:cc_toolchain_config_lib.bzl",
+    "feature",
+    "flag_group",
+    "flag_set",
+    "tool_path",
+)
 load("@bazel_tools//tools/build_defs/cc:action_names.bzl", "ACTION_NAMES")
 
-load(
-       "@bazel_tools//tools/cpp:cc_toolchain_config_lib.bzl",
-       "feature",
-       "flag_group",
-       "flag_set", 
-)
-
-all_link_actions = [ # NEW
+all_link_actions = [
+    # NEW
     ACTION_NAMES.cpp_link_executable,
     ACTION_NAMES.cpp_link_dynamic_library,
     ACTION_NAMES.cpp_link_nodeps_dynamic_library,
 ]
+
 def _impl(ctx):
-    tool_paths = [ # NEW
+    tool_paths = [
+        # NEW
         tool_path(
             name = "gcc",
-            path = "/usr/local/bin/clang++",
+            path = "/usr/local/bin/clang",
         ),
         tool_path(
             name = "ld",
@@ -48,37 +50,41 @@ def _impl(ctx):
             path = "/bin/false",
         ),
     ]
-    features = [ # NEW
-           feature  (
-               name = "default_linker_flags",
-               enabled = True,
-               flag_sets = [
-                   flag_set(
-                       actions = all_link_actions,
-                       flag_groups = ([
-                           flag_group(
-                               flags = [
-                                   "-L/usr/lib/llvm-10/lib",
-                                   "-fuse-ld=lld",
-                                   "-I/usr/lib/llvm-10/include",
-                                   "-fcoroutines-ts",
-                                   "-stdlib=libc++",
-                                   "-std=c++2a",
-                                   "-lc++",
-                                   "-lm",
-                                   "-lpthread",
-                               ],
-                           ),
-                       ]),
-                   ),
-               ],
-           ),
-       ]   
+    features = [
+        # NEW
+        feature(
+            name = "default_linker_flags",
+            enabled = True,
+            flag_sets = [
+                flag_set(
+                    actions = all_link_actions,
+                    flag_groups = ([
+                        flag_group(
+                            flags = [
+                                "-L/usr/lib/llvm-10/lib",
+                                #"-fuse-ld=lld",
+                                "-I/usr/lib/llvm-10/include",
+                                "-fcoroutines-ts",
+                                "-stdlib=libc++",
+                                "-std=c++2a",
+                                "-lc++",
+                                "-lm",
+                                "-lpthread",
+                            ],
+                        ),
+                    ]),
+                ),
+            ],
+        ),
+    ]
     return cc_common.create_cc_toolchain_config_info(
         ctx = ctx,
-        features = features, # NEW
-        cxx_builtin_include_directories = [ # NEW
+        features = features,  # NEW
+        cxx_builtin_include_directories = [
+            # NEW
+            # not sure why below is needed :(
             "/usr/lib/llvm-10/lib/clang/10.0.0/include/",
+            # llvm-config --includedir
             "/usr/lib/llvm-10/include",
             "/usr/include",
         ],
