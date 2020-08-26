@@ -5,14 +5,44 @@
 
 using namespace std;
 
-generator<int> getInts(int first, int last) {
-  for (auto i = first; i <= last; ++i) {
-    co_yield i;
+class resumable {
+public:
+  struct promise_type;
+  using coro_handle = std::experimental::coroutine_handle<promise_type>;
+  resumable(coro_handle handle) : handle_(handle) {  }
+  //resumable(resumable&) = delete;
+  //resumable(resumable&&) = delete;
+  bool resume() {
+    if (not handle_.done())
+      handle_.resume();
+    return not handle_.done();
   }
+  ~resumable() { handle_.destroy(); }
+private:
+  coro_handle handle_;
+};
+
+struct resumable::promise_type {
+  using coro_handle = std::experimental::coroutine_handle<promise_type>;
+  auto get_return_object() {
+    return coro_handle::from_promise(*this);
+  }
+  auto initial_suspend() { return std::experimental::suspend_always(); }
+  auto final_suspend() { return std::experimental::suspend_always(); }
+  void return_void() {}
+  void unhandled_exception() {
+    std::terminate();
+  }
+};
+
+resumable foo(){
+  std::cout << "Hello" << std::endl;
+  co_await std::experimental::suspend_always();
+  std::cout << "Coroutine" << std::endl;
 }
 
-int main() {
-  for (auto i : getInts(5, 10)) {
-    std::cout << i << " ";
-  }
+int main(){
+  resumable res =foo();
+  while (res.resume());
+  return 0;
 }
