@@ -1,4 +1,3 @@
-
 load("@rules_foreign_cc//tools/build_defs:cmake.bzl", "cmake_external")
 
 package(
@@ -20,7 +19,6 @@ cmake_external(
     # Values to be passed as -Dkey=value on the CMake command line;
     # here are serving to provide some CMake script configuration options
     cache_entries = {
-        "EVENT__LIBRARY_TYPE": "STATIC",
     },
     lib_source = ":gtest_source",
 
@@ -28,7 +26,10 @@ cmake_external(
     # as the result of the build;
     # However, the cmake_external dependants could use other artefacts provided by the build,
     # according to their CMake script
-    static_libraries = ["libgtest.a", "libgmock.a"],
+    static_libraries = [
+        "libgtest.a",
+        "libgmock.a",
+    ],
 )
 
 cmake_external(
@@ -36,7 +37,6 @@ cmake_external(
     # Values to be passed as -Dkey=value on the CMake command line;
     # here are serving to provide some CMake script configuration options
     cache_entries = {
-        "EVENT__LIBRARY_TYPE": "STATIC",
     },
     lib_source = ":gtest_source",
 
@@ -44,5 +44,8 @@ cmake_external(
     # as the result of the build;
     # However, the cmake_external dependants could use other artefacts provided by the build,
     # according to their CMake script
-    static_libraries = ["libgtest_main.a", "libgmock_main.a"],
+    static_libraries = [
+        "libgtest_main.a",
+        "libgmock_main.a",
+    ],
 )
