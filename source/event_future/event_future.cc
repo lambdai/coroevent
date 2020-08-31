@@ -1,10 +1,13 @@
 #include "source/event_future/event_future.h"
+#include "glog/logging.h"
 
 namespace coroevent {
-EventFuture::EventFuture() : base_(event_base_new()) {}
-EventFuture::~EventFuture() { event_base_free(base_); }
+EventFuture::EventFuture() {}
 
-event_base* EventFuture::getEventBase() { return base_; }
-void EventFuture::resume() { event_base_loop(base_, EVLOOP_NONBLOCK); }
+EventFuture::~EventFuture() {
+  // event_del(&raw_event_);
+}
+
+void EventFuture::resume() { LOG(INFO) << "in " << __FUNCTION__; }
 
 } // namespace coroevent
