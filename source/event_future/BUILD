@@ -5,7 +5,7 @@ cc_library(
     srcs = ["event_future.cc"],
     hdrs = ["event_future.h"],
     deps = [
-        "@libevent",
+        "@libevent//:libevent",
     ],
 )
 
