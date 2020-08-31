@@ -34,3 +34,11 @@ http_archive(
     strip_prefix = "googletest-release-1.10.0",
     build_file = "//bazel:gtest.BUILD",
 )
+
+http_archive(
+    name = "glog",
+    url = "https://github.com/google/glog/archive/v0.4.0.tar.gz",
+    sha256 = "f28359aeba12f30d73d9e4711ef356dc842886968112162bc73002645139c39c",
+    strip_prefix = "glog-0.4.0",
+    build_file = "//bazel:glog.BUILD",
+)

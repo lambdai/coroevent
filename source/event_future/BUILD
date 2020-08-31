@@ -5,7 +5,7 @@ cc_library(
     srcs = ["event_future.cc"],
     hdrs = ["event_future.h"],
     deps = [
-        "@libevent//:libevent",
+        "@libevent",
     ],
 )
 
@@ -14,6 +14,7 @@ cc_test(
     srcs = ["event_future_test.cc"],
     deps = [
         ":event_future_lib",
+        "@glog",
         "@gtest",
         "@gtest//:gtest_main",
     ],

@@ -10,6 +10,8 @@ public:
 
   event_base* getEventBase();
 
+  void resume();
+
 private:
   struct event_base* base_;
 };
