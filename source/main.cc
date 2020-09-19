@@ -48,7 +48,7 @@ struct resumable::promise_type {
 
 resumable foo() {
   std::cout << "Hello" << std::endl;
-  co_await std::experimental::suspend_always();
+  co_await std::experimental::suspend_never();
   std::cout << "another co_wait" << std::endl;
 
   co_await std::experimental::suspend_always();
@@ -59,14 +59,24 @@ resumable foo() {
 int main() {
   resumable res1 = foo();
   resumable res2 = foo();
+  
   std::vector<resumable*> rs{&res1, &res2};
   std::vector<bool> runs{true, true};
-  while (std::any_of(runs.begin(), runs.end(), [](auto b) { return b; })) {
-    for (int i = 0; i < 2; i++) {
-      if (runs[i]) {
-        runs[i] = rs[i]->resumeXX();
-      }
-    }
-  }
+  // while (std::any_of(runs.begin(), runs.end(), [](auto b) { return b; })) {
+  //   std::cout << "about to call resume()" << std::endl;
+  //   for (int i = 0; i < 2; i++) {
+  //     if (runs[i]) {
+  //       runs[i] = rs[i]->resumeXX();
+  //     }
+  //   }
+  // }
+      std::cout << "about to call resume1()" << std::endl;
+      while (rs[0]->resumeXX());
+std::cout << "about to call resume2()" << std::endl;
+      
+      while (rs[1]->resumeXX());
+
+    
+  
   return 0;
 }
