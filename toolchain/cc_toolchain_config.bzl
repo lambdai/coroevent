@@ -19,7 +19,7 @@ def _impl(ctx):
         # NEW
         tool_path(
             name = "gcc",
-            path = "/usr/local/bin/clang",
+            path = "/usr/lib/llvm-10/bin/clang",
         ),
         tool_path(
             name = "ld",
@@ -31,7 +31,7 @@ def _impl(ctx):
         ),
         tool_path(
             name = "cpp",
-            path = "/usr/local/bin/clang++",
+            path = "/usr/lib/llvm-10/bin/clang++",
         ),
         tool_path(
             name = "gcov",
