@@ -8,7 +8,7 @@
 namespace coroevent {
 class EventBaseFuture {
 public:
-  struct EventBaseFuturePromise;
+  class EventBaseFuturePromise;
   using EventBaseFutureHandle = std::experimental::coroutine_handle<EventBaseFuturePromise>;
   EventBaseFuture();
   EventBaseFuture(EventBaseFuture&& rhs);

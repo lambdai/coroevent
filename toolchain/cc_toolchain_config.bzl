@@ -19,11 +19,11 @@ def _impl(ctx):
         # NEW
         tool_path(
             name = "gcc",
-            path = "/usr/lib/llvm-10/bin/clang",
+            path = "/usr/lib/llvm-my11/bin/clang",
         ),
         tool_path(
             name = "ld",
-            path = "/usr/lib/llvm-10/bin/ld.lld",
+            path = "/usr/lib/llvm-my11/bin/ld.lld",
         ),
         tool_path(
             name = "ar",
@@ -31,7 +31,7 @@ def _impl(ctx):
         ),
         tool_path(
             name = "cpp",
-            path = "/usr/lib/llvm-10/bin/clang++",
+            path = "/usr/lib/llvm-my11/bin/clang++",
         ),
         tool_path(
             name = "gcov",
@@ -61,9 +61,9 @@ def _impl(ctx):
                     flag_groups = ([
                         flag_group(
                             flags = [
-                                "-L/usr/lib/llvm-10/lib",
+                                "-L/usr/lib/llvm-my11/lib",
                                 #"-fuse-ld=lld",
-                                "-I/usr/lib/llvm-10/include",
+                                "-I/usr/lib/llvm-my11/include",
                                 "-fcoroutines-ts",
                                 "-stdlib=libc++",
                                 "-std=c++2a",
@@ -83,9 +83,9 @@ def _impl(ctx):
         cxx_builtin_include_directories = [
             # NEW
             # not sure why below is needed :(
-            "/usr/lib/llvm-10/lib/clang/10.0.0/include/",
+            "/usr/lib/llvm-my11/lib/clang/11.0.0/include/",
             # llvm-config --includedir
-            "/usr/lib/llvm-10/include",
+            "/usr/lib/llvm-my11/include",
             "/usr/include",
         ],
         toolchain_identifier = "local",

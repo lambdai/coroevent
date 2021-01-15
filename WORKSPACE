@@ -1,6 +1,7 @@
 workspace(name = "coroevent")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository") 
 
 #all_content = """filegroup(name = "all", srcs = glob(["**"]), visibility = ["//visibility:public"])"""
 
@@ -41,4 +42,10 @@ http_archive(
     sha256 = "f28359aeba12f30d73d9e4711ef356dc842886968112162bc73002645139c39c",
     strip_prefix = "glog-0.4.0",
     build_file = "//bazel:glog.BUILD",
+)
+
+git_repository(
+    name = "boringssl",
+    commit = "bdbe37905216bea8dd4d0fdee93f6ee415d3aa15",
+    remote = "https://boringssl.googlesource.com/boringssl",
 )
